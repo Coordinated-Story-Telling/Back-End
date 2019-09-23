@@ -6,7 +6,7 @@ module.exports = {
       client: 'sqlite3',
       useNullAsDefault: true,
       connection: {
-        filename: './datab/auth.db3',
+        filename: './data/auth.db3',
       },
       pool: {
         afterCreate: (conn, done) => {
@@ -14,7 +14,7 @@ module.exports = {
         },
       },
       migrations: {
-        directory: './datab/migrations',
+        directory: './data/migrations',
       },
       seeds: {
         directory: './data/seeds',
