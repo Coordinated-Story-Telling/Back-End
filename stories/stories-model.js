@@ -2,6 +2,7 @@ const db = require("../data/dbConfig.js");
 
 
 function getStories() {
+
   return db("stories as s")
   .join('countries as c', 's.country_id', 'c.id')
   .select("s.id", "s.title", "s.description", "s.created_at", "s.user_id", "c.country_name");
