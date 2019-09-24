@@ -1,29 +1,19 @@
 const db = require("../data/dbConfig.js");
 
-// const get = id => {
-//     const queries = db('stories');
-
-//     return id ? queries.where({ id }).first() : queries;
-//   };
-
-function getUser(id) {
-  return db("users")
-    .where({ id })
-    .first();
-}
 
 function getStories() {
-  return db("stories").select("id", "title", "description", "created_at");
+  return db("stories as s")
+  .join('countries as c', 's.country_id', 'c.id')
+  .select("s.id", "s.title", "s.description", "s.created_at", "s.user_id", "c.country_name");
 }
+
+// move to users
 
 function getUserStories(id) {
   return db("users as u")
     .select("s.title", "s.description", "s.created_at", "s.country_id")
     .join("stories as s", "u.id", "s.user_id")
     .where({ user_id: id });
-  // .then(user => {
-  //     return user
-  // })
 }
 
 function getCountry(id) {
@@ -35,20 +25,18 @@ function getCountry(id) {
 }
 
 const getStoryById = id => {
-  db("stories")
+  return db("stories")
     .join("countries", "stories.country_id", "=", "countries.id")
-    .where({ country_id: id })
+    .where({ user_id: id })
     .select(
       "stories.id",
       "countries.country_name",
       "stories.title",
       "stories.description",
-      "stories.date",
-      "stories.media"
+      "stories.created_at",
+      "stories.media",
+      "stories.user_id"
     );
-  // .then(story => {
-  //   return story;
-  // });
 };
 
 function getUserAndStory(id) {
@@ -89,9 +77,9 @@ const insert = story =>
   db("stories").insert(story, [
     "id",
     "title",
+    "country_id",
     "description",
-    "user_id",
-    "created_at"
+    "user_id"
   ]);
 
 function update(changes, id) {
@@ -113,6 +101,5 @@ module.exports = {
   getStoryById,
   getUserAndStory,
   getCountry,
-  getUser,
   getUserStories
 };

@@ -1,9 +1,8 @@
-# Back-End
+#Back-End Endpoints:
 
-Endpoints:
-
-REGISTER
-/api/auth/register
+<!-- Authorization  -->
+#REGISTER
+POST to /api/auth/register
 
 {
 "username": "Reese",
@@ -14,8 +13,8 @@ REGISTER
 "phone": "19191919"
 }
 
-LOGIN
-/api/auth/login
+#LOGIN
+POST to /api/auth/login
 
 {
 "username": "Reese",
@@ -23,44 +22,88 @@ LOGIN
 
 }
 
-GET Stories
-/api/stories
+# GET to /api/stories
 This is what is returned:
-{
-"id": 1,
-"title": "test story",
-"description": "this is a really sad sorry",
-"date": null
-},
 
-GET Stories by Id
-/api/stories/:id
+  {
+    "id": 1,
+    "title": "Tester story 1",
+    "description": "This is a great story about tester ones experience",
+    "created_at": "2019-09-24 21:30:58",
+    "user_id": 1,
+    "country_name": "Madagascar"
+  },
+
+# GET User, stories and countries stories are associated with
+/api/users/:id
 This is what is returned:
-{
-"id": 4,
-"title": "test story two",
-"description": "this is another really sad story",
-"date": null,
-"user_id": 2
-},
-
-POST Stories
-/api/stories/:id
 
 {
-"user_id": "2",
-"title": "test story two",
-"description": "this is another really sad story"
+  "username": "testUser1",
+  "lastName": "McTest",
+  "firstName": "Tester",
+  "email": "email1@email.com",
+  "phone": "1-888-888-8888",
+  "stories": [
+    {
+      "title": "Tester story 1",
+      "description": "This is a great story about tester ones experience",
+      "created_at": "2019-09-24 21:30:58",
+      "country_id": 12
+    },
+    {
+      "title": "this is my lovely story",
+      "description": "it's the lovliest story ever",
+      "created_at": "2019-09-24 21:54:10",
+      "country_id": 8
+    }
+  ],
+  "country": [
+    {
+      "country_name": "Madagascar"
+    },
+    {
+      "country_name": "Guatemala"
+    }
+  ]
 }
 
-PUT Stories
+#POST Stories
 /api/stories/:id
 
 {
-"user_id": "2",
-"title": "test story two",
-"description": "this is another really even sadder story"
+	"user_id": "1",
+	"country_id": "8",
+	"title": "this is my lovely story",
+	"description": "it's the lovliest story ever"
 }
 
-DELETE Stories
+NOTE: please supply the corresponding countries list id that matches the country name selected by the user
+
+#PUT Stories
 /api/stories/:id
+
+{
+	"user_id": "1",
+	"country_id": "8",
+	"title": "this is my lovely story",
+	"description": "it's the lovliest story ever"
+}
+
+#DELETE Stories
+/api/stories/:id
+
+
+#GET Countries
+/api/countries
+[
+    {
+        "id": 1,
+        "country_name": "Bolivia"
+    },
+    {
+        "id": 2,
+        "country_name": "Brazil"
+    }
+... etc. 
+]

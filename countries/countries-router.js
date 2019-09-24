@@ -12,23 +12,4 @@ router.get("/", (req, res) => {
   });
 });
 
-// GET to 4000/api/countries/:id/stories
-router.get("/:id/stories", (request, response) => {
-  const { id } = request.params;
-
-  Countries.getStoryByCountry(id)
-    .then(stories => {
-      if (stories.length) {
-        response.json(stories);
-      } else {
-        response
-          .status(404)
-          .json({ message: "Could not find stories for given country" });
-      }
-    })
-    .catch(error => {
-      response.status(500).json({ message: "Failed to get stories" });
-    });
-});
-
 module.exports = router;

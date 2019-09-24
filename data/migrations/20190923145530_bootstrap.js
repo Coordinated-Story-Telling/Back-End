@@ -59,7 +59,7 @@ exports.up = function(knex) {
       tbl.timestamp("created_at").defaultTo(knex.fn.now());
       tbl.blob("media");
 
-      tbl.unique(["user_id", "country_id"]);
+      tbl.dropPrimary(["user_id", "country_id"]);
     });
 };
 

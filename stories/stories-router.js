@@ -5,53 +5,62 @@ const Stories = require("./stories-model.js");
 
 const router = express.Router();
 
+// GET to api/stories - working
 router.get("/", (req, res) => {
   Stories.getStories().then(stories => {
     res.status(200).json(stories);
   });
 });
 
-router.get("/users", (req, res) => {
-  Stories.getUsers().then(users => {
-    res.status(200).json(users);
-  });
-});
+// router.get("/:id", (req, res) => {
+//   const { id } = req.parmas
 
-router.get("/:id/user/stories", (req, res) => {
-const { id } = req.params
+//   Stories.getUser(id).then(users => {
+//     res.status(200).json(users);
+//   });
+// });
 
-  Stories.getUserStories(id)
-  .then(userStories => {
-    res.status(200).json(userStories);
-  });
-});
+// router.get("/:id/user/stories", (req, res) => {
+// const { id } = req.params
 
-router.get("/:id/entireuser", (req, res) => {
-  const { id } = req.params
-  
-    Stories.getUserAndStory(id)
-    .then(entireUser => {
-      res.status(200).json(entireUser);
-    });
-  });
+//   Stories.getUserStories(id)
+//   .then(userStories => {
+//     res.status(200).json(userStories);
+//   });
+// });
 
-router.get("/:id/user/countries", (req, res) => {
-  const { id } = req.params
-  
-    Stories.getCountry(id)
-    .then(country => {
-      res.status(200).json(country);
-    });
-  });
+// router.get("/:id/entireuser", (req, res) => {
+//   const { id } = req.params
 
+//     Stories.getUserAndStory(id)
+//     .then(entireUser => {
+//       res.status(200).json(entireUser);
+//     });
+//   });
+
+// router.get("/:id/user/countries", (req, res) => {
+//   const { id } = req.params
+
+//     Stories.getCountry(id)
+//     .then(country => {
+//       res.status(200).json(country);
+//     });
+//   });
+
+// GET to api/stories/1 - working (gets by user id)
 router.get("/:id", (req, res) => {
   const { id } = req.params;
 
-  Stories.getStoryById(id).then(stories => {
-    res.status(200).json(stories);
-  });
+  Stories.getStoryById(id)
+    .then(stories => {
+      res.status(200).json(stories);
+    })
+    .catch(error => {
+      response.status(500).json({ message: "Failed to get story by id" });
+    });
 });
 
+// POST to api/stories/1 - working
 router.post("/:id", (req, res) => {
   const storiesData = req.body;
   const { id } = req.params;
@@ -73,6 +82,7 @@ router.post("/:id", (req, res) => {
     });
 });
 
+// PUT to api/stories/1 - working
 router.put("/:id", (request, response) => {
   const { id } = request.params;
   const changes = request.body;
@@ -94,6 +104,7 @@ router.put("/:id", (request, response) => {
     });
 });
 
+// DELETE to api/stories/5 - working (deletes by story id)
 router.delete("/:id", (request, response) => {
   const { id } = request.params;
 
