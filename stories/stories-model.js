@@ -6,14 +6,63 @@ const db = require("../data/dbConfig.js");
 //     return id ? queries.where({ id }).first() : queries;
 //   };
 
-function getStories() {
-  return db("stories").select("id", "title", "description", "date");
+function getUser(id) {
+  return db("users")
+    .where({ id })
+    .first();
 }
 
-const getStoryById = user_id =>
+function getStories() {
+  return db("stories").select("id", "title", "description", "created_at");
+}
+
+function getUserStories(id) {
+  return db("users as u")
+    .select("s.title", "s.description", "s.created_at", "s.country_id")
+    .join("stories as s", "u.id", "s.user_id")
+    .where({ user_id: id });
+  // .then(user => {
+  //     return user
+  // })
+}
+
+function getCountry(id) {
+  return db("users as u")
+    .select("c.country_name")
+    .join("stories as s", "u.id", "s.user_id")
+    .join("countries as c", "s.country_id", "c.id")
+    .where({ user_id: id });
+}
+
+const getStoryById = id => {
   db("stories")
-    .where({ user_id })
-    .select("id", "title", "description", "date", "user_id");
+    .join("countries", "stories.country_id", "=", "countries.id")
+    .where({ country_id: id })
+    .select(
+      "stories.id",
+      "countries.country_name",
+      "stories.title",
+      "stories.description",
+      "stories.date",
+      "stories.media"
+    );
+  // .then(story => {
+  //   return story;
+  // });
+};
+
+function getUserAndStory(id) {
+  const userQuery = getUser(id);
+  const storiesQuery = getUserStories(id);
+  const country = getCountry(id);
+  return Promise.all([userQuery, storiesQuery, country]).then(
+    ([user, stories, country]) => {
+      user.stories = stories;
+      user.country = country;
+      return user;
+    }
+  );
+}
 
 // const getStoriesByCountry = id =>
 //     db('stories')
@@ -42,7 +91,7 @@ const insert = story =>
     "title",
     "description",
     "user_id",
-    "date"
+    "created_at"
   ]);
 
 function update(changes, id) {
@@ -61,5 +110,9 @@ module.exports = {
   insert,
   update,
   remove,
-  getStoryById
+  getStoryById,
+  getUserAndStory,
+  getCountry,
+  getUser,
+  getUserStories
 };

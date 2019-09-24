@@ -14,6 +14,27 @@ exports.up = function(knex) {
       tbl.string("phone", 50).nullable();
     })
 
+    .createTable("countries", tbl => {
+      tbl.increments();
+
+      // tbl
+      //   .integer("user_id")
+      //   .unsigned()
+      //   .references("id")
+      //   .inTable("users")
+      //   .onDelete("RESTRICT")
+      //   .onUpdate("CASCADE");
+
+      // tbl
+      //   .integer("story_id")
+      //   .unsigned()
+      //   .references("id")
+      //   .inTable("stories")
+      //   .onDelete("RESTRICT")
+      //   .onUpdate("CASCADE");
+      tbl.string("country_name", 255).notNullable;
+    })
+
     .createTable("stories", tbl => {
       tbl.increments();
       // foreign key to user id
@@ -22,7 +43,7 @@ exports.up = function(knex) {
         .unsigned()
         .references("id")
         .inTable("users")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE");
       // foreign key to country id
       tbl
@@ -30,40 +51,21 @@ exports.up = function(knex) {
         .unsigned()
         .references("id")
         .inTable("countries")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE");
 
       tbl.string("title", 255).notNullable();
       tbl.text("description").notNullable();
-      tbl.datetime("date");
+      tbl.timestamp("created_at").defaultTo(knex.fn.now());
       tbl.blob("media");
-    })
 
-    .createTable("countries", tbl => {
-      tbl.increments();
-
-      tbl
-        .integer("user_id")
-        .unsigned()
-        .references("id")
-        .inTable("users")
-        .onDelete("RESTRICT")
-        .onUpdate("CASCADE");
-
-      tbl
-        .integer("story_id")
-        .unsigned()
-        .references("id")
-        .inTable("stories")
-        .onDelete("RESTRICT")
-        .onUpdate("CASCADE");
-      tbl.string("country_name", 255).notNullable;
+      tbl.unique(["user_id", "country_id"]);
     });
 };
 
 exports.down = function(knex) {
   return knex.schema
-    .dropTableIfExists("countries")
     .dropTableIfExists("stories")
+    .dropTableIfExists("countries")
     .dropTableIfExists("users");
 };

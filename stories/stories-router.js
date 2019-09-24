@@ -11,6 +11,39 @@ router.get("/", (req, res) => {
   });
 });
 
+router.get("/users", (req, res) => {
+  Stories.getUsers().then(users => {
+    res.status(200).json(users);
+  });
+});
+
+router.get("/:id/user/stories", (req, res) => {
+const { id } = req.params
+
+  Stories.getUserStories(id)
+  .then(userStories => {
+    res.status(200).json(userStories);
+  });
+});
+
+router.get("/:id/entireuser", (req, res) => {
+  const { id } = req.params
+  
+    Stories.getUserAndStory(id)
+    .then(entireUser => {
+      res.status(200).json(entireUser);
+    });
+  });
+
+router.get("/:id/user/countries", (req, res) => {
+  const { id } = req.params
+  
+    Stories.getCountry(id)
+    .then(country => {
+      res.status(200).json(country);
+    });
+  });
+
 router.get("/:id", (req, res) => {
   const { id } = req.params;
 
