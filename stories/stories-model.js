@@ -13,7 +13,7 @@ function getStories() {
 const getStoryById = user_id =>
   db("stories")
     .where({ user_id })
-    .select("id", "title", "description", "date");
+    .select("id", "title", "description", "date", "user_id");
 
 // const getStoriesByCountry = id =>
 //     db('stories')
