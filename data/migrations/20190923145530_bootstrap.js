@@ -57,13 +57,8 @@ exports.up = function(knex) {
         .inTable("stories")
         .onDelete("RESTRICT")
         .onUpdate("CASCADE");
+      tbl.string("country_name", 255).notNullable;
     });
-
-    tbl
-        .string('country', 255)
-        .notNullable
-
-
 };
 
 exports.down = function(knex) {

@@ -9,12 +9,12 @@ console.log("environment:", secrets.environment);
 const server = express();
 
 const authRouter = require("../auth/auth-router.js");
-// const usersRouter = require("../users/users-router.js");
+const storiesRouter = require("../stories/stories-router.js");
 
 server.use(helmet());
 server.use(express.json());
 server.use(cors());
-// server.use("/api/users", usersRouter);
+server.use("/api/stories", storiesRouter);
 server.use("/api/auth", authRouter);
 
 server.get("/", (request, response) => {
