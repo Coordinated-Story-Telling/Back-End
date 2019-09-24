@@ -57,7 +57,7 @@ exports.up = function(knex) {
       tbl.string("title", 255).notNullable();
       tbl.text("description").notNullable();
       tbl.timestamp("created_at").defaultTo(knex.fn.now());
-      tbl.blob("media");
+      // tbl.binary("media"); 
 
       tbl.dropPrimary(["user_id", "country_id"]);
     });
