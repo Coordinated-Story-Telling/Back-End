@@ -4,6 +4,8 @@
 #REGISTER
 POST to /api/auth/register
 
+https://coordinated-stories.herokuapp.com/api/auth/register
+
 {
 "username": "Reese",
 "password": "password",
@@ -13,8 +15,12 @@ POST to /api/auth/register
 "phone": "19191919"
 }
 
+Successful request returns a token
+
 #LOGIN
 POST to /api/auth/login
+
+https://coordinated-stories.herokuapp.com/api/auth/login
 
 {
 "username": "Reese",
@@ -22,8 +28,14 @@ POST to /api/auth/login
 
 }
 
+Successful request returns a token
+
 # GET to /api/stories
-This is what is returned:
+
+
+https://coordinated-stories.herokuapp.com/api/stories
+
+Successful request returns a list of stories: 
 
   {
     "id": 1,
@@ -36,9 +48,15 @@ This is what is returned:
 
 # GET User, stories and countries stories are associated with
 /api/users/:id
-This is what is returned:
+
+https://coordinated-stories.herokuapp.com/api/users/1
+
+
+Successful req returns:
+
 
 {
+  "id": 1,
   "username": "testUser1",
   "lastName": "McTest",
   "firstName": "Tester",
@@ -46,56 +64,104 @@ This is what is returned:
   "phone": "1-888-888-8888",
   "stories": [
     {
-      "title": "Tester story 1",
-      "description": "This is a great story about tester ones experience",
-      "created_at": "2019-09-24 21:30:58",
-      "country_id": 12
+      "id": 3,
+      "title": "Telling another story",
+      "description": "Let me tell you about telling stories",
+      "created_at": "2019-09-25T03:02:45.719Z",
+      "country_id": 8,
+      "country_name": "Guatemala"
     },
     {
-      "title": "this is my lovely story",
-      "description": "it's the lovliest story ever",
-      "created_at": "2019-09-24 21:54:10",
-      "country_id": 8
-    }
-  ],
-  "country": [
-    {
+      "id": 1,
+      "title": "this is our new test title fun",
+      "description": "This is a great story about tester ones experience",
+      "created_at": "2019-09-25T01:52:43.239Z",
+      "country_id": 12,
       "country_name": "Madagascar"
     },
     {
+      "id": 4,
+      "title": "Telling even more stories",
+      "description": "Let me tell you about telling stories",
+      "created_at": "2019-09-25T04:41:40.043Z",
+      "country_id": 8,
       "country_name": "Guatemala"
     }
   ]
 }
 
 #POST Stories
-/api/stories/:id
+/api/stories
+
+https://coordinated-stories.herokuapp.com/api/stories
+
 
 {
 	"user_id": "1",
-	"country_id": "8",
-	"title": "this is my lovely story",
-	"description": "it's the lovliest story ever"
+	"title": "Telling even more stories",
+	"description": "Let me tell you about telling stories",
+	"country_id": "8"
 }
 
 NOTE: please supply the corresponding countries list id that matches the country name selected by the user
 
+Successful update will return the index of the added story in the array:
+
+[
+  5
+]
+
 #PUT Stories
 /api/stories/:id
 
+https://coordinated-stories.herokuapp.com/api/stories/2
+
+The id in these examples is for the story actual story id, which means you are sending us the user id in the req.params, and then in the body of the request we get from you you give us the actual id of the story you want updated
+
+example 1: 
 {
-	"user_id": "1",
+	"id": "1",
 	"country_id": "8",
 	"title": "this is my lovely story",
 	"description": "it's the lovliest story ever"
 }
 
+If successful will return:
+
+1 
+
+example 2: 
+
+{
+	"id": "3",
+	"title": "this is our new test title fun but funner!"
+}
+
+
+
 #DELETE Stories
-/api/stories/:id
+/api/stories/:story_id
+
+https://coordinated-stories.herokuapp.com/api/stories/1
+
+If successful will return: 
+
+{
+  "removed": 1
+}
 
 
 #GET Countries
 /api/countries
+
+https://coordinated-stories.herokuapp.com/api/countries
+
+countries and the corresponding id you would send back to us
+for example in the post req above
+
+
+Successful request will return list of countries: 
+
 [
     {
         "id": 1,

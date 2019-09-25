@@ -165,10 +165,10 @@ router.put("/:id", (request, response) => {
 // })
 
 // DELETE to api/stories/5 - working (deletes by story id)
-router.delete("/:id", (request, response) => {
-  const { id } = request.params;
+router.delete("/:story_id", (request, response) => {
+  const story_id = request.params.id;
 
-  Stories.remove(id)
+  Stories.remove(story_id)
     .then(deletedStory => {
       if (deletedStory) {
         response.json({ removed: deletedStory });
