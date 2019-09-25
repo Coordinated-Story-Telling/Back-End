@@ -2,6 +2,7 @@ const db = require("../data/dbConfig.js");
 
 function getUsers() {
   return db("users").select(
+    "id",
     "username",
     "lastName",
     "firstName",
@@ -13,7 +14,7 @@ function getUsers() {
 function getUser(id) {
   return db("users")
     .where({ id })
-    .select("username", "lastName", "firstName", "email", "phone")
+    .select("id", "username", "lastName", "firstName", "email", "phone")
     .first();
 }
 
