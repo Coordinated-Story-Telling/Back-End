@@ -3,10 +3,14 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const Users = require('../users/users-model.js');
 const secrets = require('../config/secrets')
+<<<<<<< HEAD
 const authentication = require('./authentication-middleware')
+=======
+const validation = require('../middleware/middleware')
+>>>>>>> ad34148ceff5ab813a20780b7336ed22106779aa
 
 // for endpoints beginning with /api/auth
-router.post('/register', (req, res) => {
+router.post('/register', validation.validateUserRegistration, (req, res) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10); // 2 ^ n
   user.password = hash;
@@ -22,7 +26,7 @@ router.post('/register', (req, res) => {
     });
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', validation.validateUserLogin, (req, res) => {
   let { username, password } = req.body;
 
   Users.findBy({ username })
@@ -50,8 +54,6 @@ function generateToken (user) {
 
   return jwt.sign(payload, secrets.jwtSecret, options);
 }
-//bring in the secret from the secrets file
 module.exports = router;
 
-//secret is used for protecting the token.. the library will produce a unique token
-// based on the secret you give it
+
