@@ -82,7 +82,7 @@ const insert = story =>
     "country_id",
     "description",
     "user_id"
-  ]);
+  ]).returning('id');
 
 function update(changes, id) {
   return db("stories")
