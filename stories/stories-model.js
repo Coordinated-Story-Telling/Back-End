@@ -1,6 +1,7 @@
 const db = require("../data/dbConfig.js");
 
 
+
 function getStories() {
 
   return db("stories as s")

@@ -5,6 +5,11 @@ const Users = require("./users-model.js");
 
 const router = express.Router();
 
+router.get("/", (req, res) => {
+  Users.getUsers().then(users => {
+    res.status(200).json(users);
+  });
+});
 
 // router.get("/user/:id", (req, res) => {
 //   const { id } = req.parmas 

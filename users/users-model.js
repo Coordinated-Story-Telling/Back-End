@@ -1,5 +1,15 @@
 const db = require("../data/dbConfig.js");
 
+function getUsers() {
+  return db("users").select(
+    "username",
+    "lastName",
+    "firstName",
+    "email",
+    "phone"
+  );
+}
+
 function getUser(id) {
   return db("users")
     .where({ id })
@@ -98,5 +108,6 @@ module.exports = {
   getUserAndStory,
   getCountry,
   getUser,
+  getUsers,
   getUserStories
 };
