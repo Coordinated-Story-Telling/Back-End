@@ -7,32 +7,13 @@ const jwt = require("jsonwebtoken");
 
 const authentication = require('../auth/authentication-middleware')
 
-//dummy line
-
-
-
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  Users.getUsers().then(users => {
-    res.status(200).json(users);
-  });
-});
+//this route will return a list of all the users if uncommented
 
-// router.get("/user/:id", (req, res) => {
-//   const { id } = req.parmas 
-
-//   Users.getUser(id).then(users => {
+// router.get("/", (req, res) => {
+//   Users.getUsers().then(users => {
 //     res.status(200).json(users);
-//   });
-// });
-
-// router.get("/userstories/:id", (req, res) => {
-// const { id } = req.params
-
-//   Users.getUserStories(id)
-//   .then(userStories => {
-//     res.status(200).json(userStories);
 //   });
 // });
 
