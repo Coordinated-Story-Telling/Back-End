@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const Users = require('../users/users-model.js');
 const secrets = require('../config/secrets')
+const authentication = require('./authentication-middleware')
 
 // for endpoints beginning with /api/auth
 router.post('/register', (req, res) => {
