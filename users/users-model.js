@@ -18,10 +18,18 @@ function getUser(id) {
     .first();
 }
 
+// function getUserStories(id) {
+//   return db("users as u")
+//     .select("s.id", "s.title", "s.description", "s.created_at", "s.country_id")
+//     .join("stories as s", "u.id", "s.user_id")
+//     .where({ user_id: id });
+// }
+
 function getUserStories(id) {
   return db("users as u")
-    .select("s.id", "s.title", "s.description", "s.created_at", "s.country_id")
+    .select("s.id", "s.title", "s.description", "s.created_at", "s.country_id", "c.country_name")
     .join("stories as s", "u.id", "s.user_id")
+    .join("countries as c", "s.country_id", "=", "c.id")
     .where({ user_id: id });
 }
 
@@ -36,7 +44,7 @@ function getCountry(id) {
 const getStoryById = id => {
   db("stories")
     .join("countries", "stories.country_id", "=", "countries.id")
-    .where({ country_id: id })
+    .where({ user_id: id })
     .select(
       "stories.id",
       "countries.country_name",
@@ -47,18 +55,30 @@ const getStoryById = id => {
     );
 };
 
+// function getUserAndStory(id) {
+//   const userQuery = getUser(id);
+//   const storiesQuery = getUserStories(id);
+//   const country = getCountry(id);
+//   return Promise.all([userQuery, storiesQuery, country]).then(
+//     ([user, stories, country]) => {
+//       user.stories = stories;
+//       user.country = country;
+//       return user;
+//     }
+//   );
+// }
+
 function getUserAndStory(id) {
-  const userQuery = getUser(id);
-  const storiesQuery = getUserStories(id);
-  const country = getCountry(id);
-  return Promise.all([userQuery, storiesQuery, country]).then(
-    ([user, stories, country]) => {
-      user.stories = stories;
-      user.country = country;
-      return user;
-    }
-  );
-}
+    const userQuery = getUser(id);
+    const storiesQuery = getUserStories(id);
+    return Promise.all([userQuery, storiesQuery]).then(
+      ([user, stories]) => {
+        console.log(stories, 'stories')
+        user.stories = stories;
+        return user;
+      }
+    );
+  }
 
 // const insert = story =>
 //   db("stories").insert(story, [
