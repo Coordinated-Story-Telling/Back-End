@@ -9,7 +9,7 @@ function getUser(id) {
 
 function getUserStories(id) {
   return db("users as u")
-    .select("s.title", "s.description", "s.created_at", "s.country_id")
+    .select("s.id", "s.title", "s.description", "s.created_at", "s.country_id")
     .join("stories as s", "u.id", "s.user_id")
     .where({ user_id: id });
 }

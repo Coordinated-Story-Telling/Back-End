@@ -63,7 +63,7 @@ router.get("/:id", (req, res) => {
 // POST to api/stories/1 - working
 router.post("/:id", (req, res) => {
   const storiesData = req.body;
-  const { id } = req.params;
+  const { id } = req.body
 
   Stories.getStoryById(id)
     .then(story => {
