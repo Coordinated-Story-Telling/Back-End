@@ -61,26 +61,41 @@ router.get("/:id", (req, res) => {
 });
 
 // POST to api/stories/1 - working
-router.post("/:id", (req, res) => {
+// router.post("/:id", (req, res) => {
+//   const storiesData = req.body;
+//   const { id } = req.body
+
+//   Stories.getStoryById(id)
+//     .then(story => {
+//       if (story) {
+//         Stories.insert(storiesData, id).then(story => {
+//           res.status(201).json(story);
+//         });
+//       } else {
+//         res
+//           .status(404)
+//           .json({ message: "Could not find story with given id." });
+//       }
+//     })
+//     .catch(err => {
+//       console.log(err)
+//       res.status(500).json({ message: "Failed to create new story" });
+//     });
+// });
+
+router.post("/", (req, res) => {
   const storiesData = req.body;
   const { id } = req.body
 
-  Stories.getStoryById(id)
+  Stories.insert(storiesData)
     .then(story => {
-      if (story) {
-        Stories.insert(storiesData, id).then(story => {
           res.status(201).json(story);
-        });
-      } else {
-        res
-          .status(404)
-          .json({ message: "Could not find story with given id." });
-      }
     })
     .catch(err => {
+      console.log(err)
       res.status(500).json({ message: "Failed to create new story" });
     });
-});
+})
 
 // PUT to api/stories/1 - working
 router.put("/:id", (request, response) => {
@@ -123,4 +138,4 @@ router.delete("/:id", (request, response) => {
     });
 });
 
-module.exports = router;
+module.exports = router

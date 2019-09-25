@@ -75,14 +75,18 @@ function getUserAndStory(id) {
 // )
 // }
 
-const insert = story =>
-  db("stories").insert(story, [
-    "id",
-    "title",
-    "country_id",
-    "description",
-    "user_id"
-  ]).returning('id');
+// const insert = story =>
+//   db("stories").insert(story, [
+//     "id",
+//     "title",
+//     "country_id",
+//     "description",
+//     "user_id"
+//   ]).returning('id');
+
+  const insert = story =>
+  db("stories")
+  .insert(story).returning('id');
 
 function update(changes, id) {
   return db("stories")
