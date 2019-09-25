@@ -44,7 +44,8 @@ exports.up = function(knex) {
         .references("id")
         .inTable("users")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate("CASCADE")
+        
       // foreign key to country id
       tbl
         .integer("country_id")
@@ -52,14 +53,16 @@ exports.up = function(knex) {
         .references("id")
         .inTable("countries")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
-
+        .onUpdate("CASCADE")
+        
+        
       tbl.string("title", 255).notNullable();
       tbl.text("description").notNullable();
       tbl.timestamp("created_at").defaultTo(knex.fn.now());
-      // tbl.binary("media"); 
+      tbl.binary("media");
 
-      // tbl.dropPrimary(["user_id", "country_id"]);
+      // tbl.dropUnique(["user_id", "country_id"]);
+      // tbl.alterTable(["user_id", "country_id"]);
     });
 };
 
