@@ -88,9 +88,15 @@ function getUserAndStory(id) {
   db("stories")
   .insert(story).returning('id');
 
-function update(changes, id) {
+// function update(changes, id) {
+//   return db("stories")
+//     .where({ id: id })
+//     .update(changes);
+// }
+
+function update(changes, story_id) {
   return db("stories")
-    .where({ id: id })
+    .where({ id: story_id })
     .update(changes);
 }
 

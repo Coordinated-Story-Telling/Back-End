@@ -98,14 +98,42 @@ router.post("/", (req, res) => {
 })
 
 // PUT to api/stories/1 - working
+// router.put("/:id", (request, response) => {
+//   const { id } = request.params;
+//   const changes = request.body;
+
+//   Stories.getStoryById(id)
+//     .then(story => {
+//       console.log(story)
+//       if (story) {
+//         Stories.update(changes, id).then(updatedStory => {
+//           response.json(updatedStory);
+//         });
+//       } else {
+//         response
+//           .status(404)
+//           .json({ message: "Could not find story with given id" });
+//       }
+//     })
+//     .catch(error => {
+//       response.status(500).json({ message: "Failed to update story" });
+//     });
+// });
+
 router.put("/:id", (request, response) => {
   const { id } = request.params;
+  const story_id = request.body.id
+  
   const changes = request.body;
+  console.log(changes)
+  console.log(story_id, 'this is the story_id')
 
   Stories.getStoryById(id)
-    .then(story => {
-      if (story) {
-        Stories.update(changes, id).then(updatedStory => {
+    .then(stories => {
+      console.log(stories)
+      if (stories) {
+        Stories.update(changes, story_id)
+        .then(updatedStory => {
           response.json(updatedStory);
         });
       } else {
@@ -118,6 +146,23 @@ router.put("/:id", (request, response) => {
       response.status(500).json({ message: "Failed to update story" });
     });
 });
+
+// router.put("/", (req, response) => {
+//   const { id } = req.params;
+//   const body = req.body
+//   console.log(body)
+//   const story_id = req.body.id
+//   const changes = request.body;
+
+//   Stories.update(story_id)
+//     .then(story => {
+//           response.json(updatedStory);
+       
+//       })
+//     .catch(error => {
+//       response.status(500).json({ message: "Failed to update story" });
+//   });
+// })
 
 // DELETE to api/stories/5 - working (deletes by story id)
 router.delete("/:id", (request, response) => {
