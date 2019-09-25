@@ -100,9 +100,9 @@ function update(changes, story_id) {
     .update(changes);
 }
 
-const remove = story_id =>
+const remove = id =>
   db("stories")
-    .where({ id: story_id })
+    .where({ id: id })
     .del();
 
 module.exports = {

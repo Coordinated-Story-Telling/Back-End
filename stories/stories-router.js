@@ -5,6 +5,8 @@ const Stories = require("./stories-model.js");
 
 const router = express.Router();
 
+const authentication = require("../auth/authentication-middleware");
+
 // GET to api/stories - working
 router.get("/", (req, res) => {
   Stories.getStories().then(stories => {
@@ -48,7 +50,7 @@ router.get("/", (req, res) => {
 //   });
 
 // GET to api/stories/1 - working (gets by user id)
-router.get("/:id", (req, res) => {
+router.get("/:id", authentication, (req, res) => {
   const { id } = req.params;
 
   Stories.getStoryById(id)
@@ -83,19 +85,19 @@ router.get("/:id", (req, res) => {
 //     });
 // });
 
-router.post("/", (req, res) => {
+router.post("/", authentication, (req, res) => {
   const storiesData = req.body;
-  const { id } = req.body
+  const { id } = req.body;
 
   Stories.insert(storiesData)
     .then(story => {
-          res.status(201).json(story);
+      res.status(201).json(story);
     })
     .catch(err => {
-      console.log(err)
+      console.log(err);
       res.status(500).json({ message: "Failed to create new story" });
     });
-})
+});
 
 // PUT to api/stories/1 - working
 // router.put("/:id", (request, response) => {
@@ -120,20 +122,19 @@ router.post("/", (req, res) => {
 //     });
 // });
 
-router.put("/:id", (request, response) => {
+router.put("/:id", authentication, (request, response) => {
   const { id } = request.params;
-  const story_id = request.body.id
-  
+  const story_id = request.body.id;
+
   const changes = request.body;
-  console.log(changes)
-  console.log(story_id, 'this is the story_id')
+  console.log(changes);
+  console.log(story_id, "this is the story_id");
 
   Stories.getStoryById(id)
     .then(stories => {
-      console.log(stories)
+      console.log(stories);
       if (stories) {
-        Stories.update(changes, story_id)
-        .then(updatedStory => {
+        Stories.update(changes, story_id).then(updatedStory => {
           response.json(updatedStory);
         });
       } else {
@@ -157,7 +158,7 @@ router.put("/:id", (request, response) => {
 //   Stories.update(story_id)
 //     .then(story => {
 //           response.json(updatedStory);
-       
+
 //       })
 //     .catch(error => {
 //       response.status(500).json({ message: "Failed to update story" });
@@ -165,9 +166,10 @@ router.put("/:id", (request, response) => {
 // })
 
 // DELETE to api/stories/5 - working (deletes by story id)
-router.delete("/:story_id", (request, response) => {
+router.delete("/:id", authentication, (request, response) => {
   const story_id = request.params.id;
-
+  const body = request.params.body;
+  console.log(body);
   Stories.remove(story_id)
     .then(deletedStory => {
       if (deletedStory) {
@@ -183,4 +185,4 @@ router.delete("/:story_id", (request, response) => {
     });
 });
 
-module.exports = router
+module.exports = router;
