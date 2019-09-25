@@ -3,6 +3,14 @@ const express = require("express");
 const db = require("../data/dbConfig.js");
 const Users = require("./users-model.js");
 
+const jwt = require("jsonwebtoken");
+
+const authentication = require('../auth/authentication-middleware')
+
+//dummy line
+
+
+
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -28,7 +36,7 @@ router.get("/", (req, res) => {
 //   });
 // });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", authentication, (req, res) => {
   const { id } = req.params
   
     Users.getUserAndStory(id)
@@ -36,14 +44,5 @@ router.get("/:id", (req, res) => {
       res.status(200).json(entireUser);
     });
   });
-
-// router.get("/countries/:id", (req, res) => {
-//   const { id } = req.params
-  
-//     Users.getCountry(id)
-//     .then(country => {
-//       res.status(200).json(country);
-//     });
-//   });
 
 module.exports = router;
