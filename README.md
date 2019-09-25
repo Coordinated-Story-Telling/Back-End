@@ -3,6 +3,7 @@
 <!-- Authorization  -->
 #REGISTER
 POST to /api/auth/register
+- credentials NOT required
 
 https://coordinated-stories.herokuapp.com/api/auth/register
 
@@ -19,6 +20,7 @@ Successful request returns a token
 
 #LOGIN
 POST to /api/auth/login
+- credentials NOT required
 
 https://coordinated-stories.herokuapp.com/api/auth/login
 
@@ -31,8 +33,7 @@ https://coordinated-stories.herokuapp.com/api/auth/login
 Successful request returns a token
 
 # GET to /api/stories
-
-
+- credentials NOT required
 https://coordinated-stories.herokuapp.com/api/stories
 
 Successful request returns a list of stories: 
@@ -49,6 +50,7 @@ Successful request returns a list of stories:
 # GET User, stories and countries stories are associated with
 /api/users/:id
 
+- credentials required
 https://coordinated-stories.herokuapp.com/api/users/1
 
 
@@ -93,6 +95,7 @@ Successful req returns:
 #POST Stories
 /api/stories
 
+- credentials required
 https://coordinated-stories.herokuapp.com/api/stories
 
 
@@ -114,9 +117,10 @@ Successful update will return the index of the added story in the array:
 #PUT Stories
 /api/stories/:id
 
+- credentials required
 https://coordinated-stories.herokuapp.com/api/stories/2
 
-The id in these examples is for the story actual story id, which means you are sending us the user id in the req.params, and then in the body of the request we get from you you give us the actual id of the story you want updated
+The id in these examples below are for the actual story id, which means the :id in the url parameter you are sending us the user id, and then in the body of the request we get from you you give us the actual id of the story you want updated.
 
 example 1: 
 {
@@ -141,7 +145,7 @@ example 2:
 
 #DELETE Stories
 /api/stories/:story_id
-
+- credentials required 
 https://coordinated-stories.herokuapp.com/api/stories/1
 
 If successful will return: 
@@ -153,7 +157,7 @@ If successful will return:
 
 #GET Countries
 /api/countries
-
+- credentials required 
 https://coordinated-stories.herokuapp.com/api/countries
 
 countries and the corresponding id you would send back to us
